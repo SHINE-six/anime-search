@@ -3,8 +3,6 @@ import {
   Box,
   Typography,
   Button,
-  Card,
-  CardContent,
   IconButton,
   Chip,
   Dialog,
@@ -17,13 +15,10 @@ import {
   ListItemSecondaryAction,
   Tabs,
   Tab,
-  Divider,
-  Alert,
 } from '@mui/material';
 import {
   Info as InfoIcon,
   Delete as DeleteIcon,
-  Refresh as RefreshIcon,
   Storage as StorageIcon,
 } from '@mui/icons-material';
 import cacheService from '../services/cache';
@@ -68,10 +63,6 @@ const CacheManager: React.FC<CacheManagerProps> = ({ open, onClose }) => {
   const handleRemoveSearch = (query: string, page: number) => {
     cacheService.removeSearchFromCache(query, page);
     refreshCache();
-  };
-
-  const formatDate = (timestamp: number) => {
-    return new Date(timestamp).toLocaleString();
   };
 
   const formatAge = (timestamp: number) => {

@@ -12,13 +12,11 @@ import {
   Rating,
   Skeleton,
   Divider,
-  IconButton,
 } from '@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
   PlayArrow as PlayArrowIcon,
   Star as StarIcon,
-  Person as PersonIcon,
   CalendarToday as CalendarTodayIcon,
   Tv as TvIcon,
   Movie as MovieIcon,
