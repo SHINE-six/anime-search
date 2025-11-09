@@ -1,70 +1,101 @@
-# Getting Started with Create React App
+## Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+You'll build an Anime Search App - a two-page application where users can search for anime and view details.
 
-## Available Scripts
+**Page 1:** Search page displaying results
 
-In the project directory, you can run:
+**Page 2:** Detail page for selected anime
 
-### `npm start`
+**API:** [Jikan](https://docs.api.jikan.moe/) API - free, no authentication required
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technical Requirements
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Core Stack:
 
-### `npm test`
+- React 18 or higher
+- React hooks only (no class components)
+- TypeScript
+- react-router-dom for navigation
+- Redux for state management
+- UI library of your choice
+- Single Page App only (no Next.js)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Functionality:
 
-### `npm run build`
+- Server-side pagination on the search page
+- Instant search with debouncing (see details below)
+- Must use redux for state management
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Instant Search Implementation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The search bar should work without requiring users to press Enter or click a button:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Debounce API calls to 250ms intervals to avoid excessive requests
+- Cancel any in-flight API requests if the user continues typing
+- This prevents making calls on every keystroke while keeping search responsive
 
-### `npm run eject`
+## Submission Requirements
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Package Manager and Setup (CRITICAL):
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **You MUST use npm only** - do not use yarn, pnpm, or any other package managers
+- Your project must be runnable with these two commands only:
+    
+    ```bash
+    npm install
+    npm run dev
+    ```
+    
+- The dev server must start on **port 4000**
+- **Do not use environment variables** - the app should work immediately after installation
+- **Failing to meet these requirements will result in automatic disqualification** - if we cannot simply run `npm install` and `npm run dev` and use your app right away, your submission will not be accepted
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Deployment:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **You must host your project on a free hosting platform** so we can view it live
+- You can use any free hosting service you prefer (Vercel, Render, GitHub Pages, etc.)
+- We recommend **Netlify** if you're unsure, as it is free and convenient
+- Include the live URL in your submission
 
-## Learn More
+## Evaluation Criteria
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Your submission will be evaluated on:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **Correct Implementation** - All features work as described, proper routing, and state management
+2. **TypeScript Usage** - Proper typing throughout with minimal use of 'any' types
+3. **Code Organization** - Logical folder structure, reusable components, and clear separation of concerns that makes it easy for other developers to extend your work
+4. **Code Quality** - Clean, well-formatted code following React and TypeScript best practices
+5. **React Best Practices** - Proper hook usage, avoiding anti-patterns, efficient re-rendering
 
-### Code Splitting
+## Bonus Points (Optional)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Stand out from other applicants by including:
 
-### Analyzing the Bundle Size
+**If you implement any bonus features, please list them in your README under a "Bonus Implementation" header to help us evaluate your submission quickly.**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### User Experience:
 
-### Making a Progressive Web App
+- Creative UI with unique "wow" factor
+- Skeleton loaders or meaningful loading states
+- Empty state and no results handling with helpful messaging
+- Mobile responsiveness
+- Additional features that enhance the project
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Technical Excellence:
 
-### Advanced Configuration
+- Proper error handling (network failures, rate limiting, invalid API responses)
+- Race condition handling
+- Unit or integration tests
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Submission Checklist
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Ensure:
+- [ ]  Project uses npm only (no yarn/pnpm)
+- [ ]  `npm install` and `npm run dev` starts the app successfully
+- [ ]  Dev server runs on port 4000
+- [ ]  No environment variables required
+- [ ]  Project is deployed and accessible via live URL
+- [ ]  All core functionality works as described
+- [ ]  Code is written in TypeScript
+- [ ]  Redux is properly implemented for state management
+- [ ]  If bonus features implemented, they are listed in README under "Bonus Implementation" header
