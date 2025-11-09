@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { SearchState, Anime, PaginationInfo } from '../types';
+import { SearchState } from '../types';
 import apiService from '../services/api';
 
 // Initial state
