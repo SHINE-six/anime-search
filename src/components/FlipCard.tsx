@@ -95,7 +95,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ anime, delay = 0 }) => {
         onClick={handleCardClick}
       >
         <AnimatePresence mode="wait">
-          {!isFlipped ? (
+          {(!isFlipped ? (
             // Front of card
             <motion.div
               key="front"
@@ -250,11 +250,9 @@ const FlipCard: React.FC<FlipCardProps> = ({ anime, delay = 0 }) => {
                 </div>
               </div>
             </motion.div>
-          )}
+          )) as React.ReactNode}
         </AnimatePresence>
       </Card>
     </motion.div>
   );
-};
-
-export default FlipCard;
+};export default FlipCard;
