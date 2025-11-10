@@ -6,18 +6,27 @@ import ErrorBoundary from './components/ErrorBoundary';
 import SearchPage from './pages/SearchPage';
 import DetailPage from './pages/DetailPage';
 
-// Create Material-UI theme
+// Create Material-UI theme - Dark mode for 3D experience
 const theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
-      main: '#1976d2',
+      main: '#2196f3',
+      light: '#64b5f6',
+      dark: '#1976d2',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#f50057',
+      light: '#ff5983',
+      dark: '#c51162',
     },
     background: {
-      default: '#f5f5f5',
+      default: '#0a0a0f',
+      paper: 'rgba(30, 30, 40, 0.8)',
+    },
+    text: {
+      primary: '#ffffff',
+      secondary: '#b0bec5',
     },
   },
   typography: {

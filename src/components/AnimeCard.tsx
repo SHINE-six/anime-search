@@ -4,7 +4,6 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  Box,
   Chip,
   Rating,
   Skeleton,
@@ -58,10 +57,9 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
     >
       <CardMedia
         component="img"
-        height="300"
         image={getImageUrl()}
-        alt={anime.title}
         sx={{
+          height: 300,
           objectFit: 'cover',
         }}
       />
@@ -83,7 +81,7 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
           {anime.title}
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
           <Rating 
             value={(anime.score || 0) / 2} 
             readOnly 
@@ -93,9 +91,9 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
           <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
             {formatScore(anime.score)}
           </Typography>
-        </Box>
+        </div>
 
-        <Box sx={{ display: 'flex', gap: 1, mb: 1, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 1, marginBottom: 1, flexWrap: 'wrap' }}>
           <Chip 
             label={anime.type || 'Unknown'} 
             size="small" 
@@ -115,7 +113,7 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
               color={anime.airing ? 'success' : 'default'}
             />
           )}
-        </Box>
+        </div>
 
         {anime.episodes && (
           <Typography variant="body2" color="text.secondary">
@@ -152,10 +150,10 @@ export const AnimeCardSkeleton: React.FC = () => {
       <CardContent sx={{ flexGrow: 1, p: 2 }}>
         <Skeleton variant="text" sx={{ fontSize: '1.5rem', mb: 1 }} />
         <Skeleton variant="text" sx={{ fontSize: '1rem', mb: 1 }} />
-        <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+        <div style={{ display: 'flex', gap: 1, marginBottom: 1 }}>
           <Skeleton variant="rectangular" width={60} height={24} sx={{ borderRadius: 3 }} />
           <Skeleton variant="rectangular" width={60} height={24} sx={{ borderRadius: 3 }} />
-        </Box>
+        </div>
         <Skeleton variant="text" sx={{ fontSize: '0.875rem', mb: 1 }} />
         <Skeleton variant="text" sx={{ fontSize: '0.875rem' }} />
         <Skeleton variant="text" sx={{ fontSize: '0.875rem' }} />

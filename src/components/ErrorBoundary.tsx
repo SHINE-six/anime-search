@@ -3,7 +3,6 @@ import {
   Container, 
   Typography, 
   Button, 
-  Box, 
   Paper 
 } from '@mui/material';
 import { RefreshRounded as RefreshIcon } from '@mui/icons-material';
@@ -48,21 +47,23 @@ class ErrorBoundary extends Component<Props, State> {
               We apologize for the inconvenience. Please try refreshing the page.
             </Typography>
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <Box sx={{ 
-                mt: 2, 
-                p: 2, 
-                bgcolor: 'grey.100', 
-                borderRadius: 1,
-                textAlign: 'left',
-                fontFamily: 'monospace',
-                fontSize: '0.875rem',
-                maxHeight: 200,
-                overflow: 'auto'
-              }}>
+              <div 
+                style={{
+                  marginTop: 16, 
+                  padding: 16, 
+                  backgroundColor: '#f5f5f5', 
+                  borderRadius: 4,
+                  textAlign: 'left' as const,
+                  fontFamily: 'monospace',
+                  fontSize: '0.875rem',
+                  maxHeight: 200,
+                  overflow: 'auto' as const
+                }}
+              >
                 <Typography variant="caption" color="error">
                   {this.state.error.message}
                 </Typography>
-              </Box>
+              </div>
             )}
             <Button
               variant="contained"

@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
-  Pagination, 
-  Box, 
+  Pagination,
   Typography,
   useTheme,
   useMediaQuery 
@@ -37,14 +36,14 @@ const SearchPagination: React.FC<SearchPaginationProps> = ({
   };
 
   return (
-    <Box 
-      sx={{ 
+    <div 
+      style={{ 
         display: 'flex', 
         flexDirection: 'column',
         alignItems: 'center',
         gap: 2,
-        mt: 4,
-        mb: 2,
+        marginTop: 4,
+        marginBottom: 2,
       }}
     >
       <Pagination
@@ -77,7 +76,7 @@ const SearchPagination: React.FC<SearchPaginationProps> = ({
           {pagination.items.total.toLocaleString()} results
         </Typography>
       )}
-    </Box>
+    </div>
   );
 };
 

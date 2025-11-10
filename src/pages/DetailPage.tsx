@@ -3,16 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
   Typography,
-  Box,
   Button,
   Alert,
-  Fade,
   Paper,
   Chip,
   Rating,
   Skeleton,
   Divider,
 } from '@mui/material';
+import { motion } from 'framer-motion';
 import {
   ArrowBack as ArrowBackIcon,
   PlayArrow as PlayArrowIcon,
@@ -26,6 +25,7 @@ import { useAppDispatch, useAppSelector } from '../store';
 import { fetchAnimeDetails, clearAnimeDetails, clearError } from '../store/animeDetailsSlice';
 import cacheService from '../services/cache';
 import { Anime } from '../types';
+import AnimatedHeader from '../components/AnimatedHeader';
 
 const DetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -136,18 +136,18 @@ const DetailPage: React.FC = () => {
   const renderTrailer = (anime: Anime) => {
     if (anime.trailer?.youtube_id) {
       return (
-        <Box sx={{ mt: 3 }}>
+        <div style={{ marginTop: 24 }}>
           <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
             <PlayArrowIcon sx={{ mr: 1 }} />
             Trailer
           </Typography>
-          <Box
-            sx={{
+          <div
+            style={{
               position: 'relative',
               paddingBottom: '56.25%', // 16:9 aspect ratio
               height: 0,
               overflow: 'hidden',
-              borderRadius: 2,
+              borderRadius: 8,
             }}
           >
             <iframe
@@ -164,8 +164,8 @@ const DetailPage: React.FC = () => {
               allowFullScreen
               title={`${anime.title} Trailer`}
             />
-          </Box>
-        </Box>
+          </div>
+        </div>
       );
     }
     return null;
@@ -181,11 +181,11 @@ const DetailPage: React.FC = () => {
     if (allGenres.length === 0) return null;
 
     return (
-      <Box sx={{ mt: 2 }}>
+      <div style={{ marginTop: 16 }}>
         <Typography variant="subtitle2" gutterBottom>
           Genres & Themes
         </Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {allGenres.map((genre) => (
             <Chip
               key={`${genre.type}-${genre.mal_id}`}
@@ -195,8 +195,8 @@ const DetailPage: React.FC = () => {
               color="primary"
             />
           ))}
-        </Box>
-      </Box>
+        </div>
+      </div>
     );
   };
 
@@ -204,11 +204,11 @@ const DetailPage: React.FC = () => {
     if (anime.studios.length === 0) return null;
 
     return (
-      <Box sx={{ mt: 2 }}>
+      <div style={{ marginTop: 16 }}>
         <Typography variant="subtitle2" gutterBottom>
           Studios
         </Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {anime.studios.map((studio) => (
             <Chip
               key={studio.mal_id}
@@ -218,8 +218,8 @@ const DetailPage: React.FC = () => {
               color="secondary"
             />
           ))}
-        </Box>
-      </Box>
+        </div>
+      </div>
     );
   };
 
@@ -230,19 +230,19 @@ const DetailPage: React.FC = () => {
           Back
         </Button>
 
-        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4 }}>
+        <div style={{ display: 'flex', gap: '32px', flexDirection: 'column' }} className="responsive-flex">
           {/* Image Skeleton */}
-          <Box sx={{ flex: '0 0 auto' }}>
+          <div style={{ flex: '0 0 auto' }}>
             <Skeleton
               variant="rectangular"
               width={300}
               height={400}
               sx={{ borderRadius: 2 }}
             />
-          </Box>
+          </div>
 
           {/* Content Skeleton */}
-          <Box sx={{ flex: 1 }}>
+          <div style={{ flex: 1 }}>
             <Skeleton variant="text" sx={{ fontSize: '2rem', mb: 2 }} />
             <Skeleton variant="text" sx={{ fontSize: '1rem', mb: 2, width: '60%' }} />
             <Skeleton variant="text" sx={{ fontSize: '1rem', mb: 3, width: '40%' }} />
@@ -250,8 +250,8 @@ const DetailPage: React.FC = () => {
             {Array.from({ length: 5 }).map((_, index) => (
               <Skeleton key={index} variant="text" sx={{ fontSize: '1rem', mb: 1 }} />
             ))}
-          </Box>
-        </Box>
+          </div>
+        </div>
       </Container>
     );
   };
@@ -291,23 +291,50 @@ const DetailPage: React.FC = () => {
     return null;
   }
 
+  const containerStyle = {
+    minHeight: '100vh',
+    backgroundColor: '#0a0a0f'
+  };
+
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Fade in timeout={500}>
-        <div>
+    <div style={containerStyle}>
+      {/* Animated Header */}
+      <AnimatedHeader
+        title={anime ? anime.title : 'Anime Details'}
+        showSearch={false}
+      />
+
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           {/* Back Button */}
-          <Button
-            startIcon={<ArrowBackIcon />}
-            onClick={handleBack}
-            sx={{ mb: 3 }}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Back to Search
-          </Button>
+            <Button
+              startIcon={<ArrowBackIcon />}
+              onClick={handleBack}
+              sx={{ 
+                mb: 3,
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: 'rgba(255,255,255,0.2)'
+                }
+              }}
+            >
+              Back to Search
+            </Button>
+          </motion.div>
 
           {/* Main Content */}
-          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4 }}>
+          <div style={{ display: 'flex', gap: '32px', flexDirection: 'column' }} className="main-content">
             {/* Anime Poster */}
-            <Box sx={{ flex: '0 0 auto', textAlign: { xs: 'center', md: 'left' } }}>
+            <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
               <img
                 src={getImageUrl(anime)}
                 alt={anime.title}
@@ -319,10 +346,10 @@ const DetailPage: React.FC = () => {
                   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
                 }}
               />
-            </Box>
+            </div>
 
             {/* Anime Information */}
-            <Box sx={{ flex: 1 }}>
+            <div style={{ flex: 1 }}>
               {/* Title */}
               <Typography
                 variant="h3"
@@ -347,17 +374,17 @@ const DetailPage: React.FC = () => {
               )}
 
               {/* Rating and Score */}
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 1 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-                  <Rating 
-                    value={(anime.score || 0) / 2} 
-                    readOnly 
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginRight: 16 }}>
+                  <Rating
+                    value={(anime.score || 0) / 2}
+                    readOnly
                     precision={0.1}
                   />
                   <Typography variant="h6" sx={{ ml: 1 }}>
                     {formatScore(anime.score)}
                   </Typography>
-                </Box>
+                </div>
                 <Chip
                   icon={<StarIcon />}
                   label={`Rank #${anime.rank || 'N/A'}`}
@@ -374,10 +401,10 @@ const DetailPage: React.FC = () => {
                     sx={{ fontSize: '0.75rem' }}
                   />
                 )}
-              </Box>
+              </div>
 
               {/* Quick Info Chips */}
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 1, marginBottom: 24 }}>
                 <Chip
                   icon={anime.type === 'TV' ? <TvIcon /> : <MovieIcon />}
                   label={anime.type || 'Unknown'}
@@ -402,114 +429,114 @@ const DetailPage: React.FC = () => {
                     variant="outlined"
                   />
                 )}
-              </Box>
+              </div>
 
               {/* Synopsis */}
               {anime.synopsis && (
-                <Box sx={{ mb: 3 }}>
+                <div style={{ marginBottom: 24 }}>
                   <Typography variant="h6" gutterBottom>
                     Synopsis
                   </Typography>
                   <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
                     {anime.synopsis}
                   </Typography>
-                </Box>
+                </div>
               )}
 
               <Divider sx={{ my: 3 }} />
 
               {/* Additional Information */}
-              <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 4 }}>
-                <Box sx={{ flex: 1 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                <div style={{ flex: 1 }}>
                   {anime.aired && (
-                    <Box sx={{ mb: 2 }}>
+                    <div style={{ marginBottom: 16 }}>
                       <Typography variant="subtitle2" gutterBottom>
                         Aired
                       </Typography>
                       <Typography variant="body2">
                         {formatDate(anime.aired.from)} - {anime.aired.to ? formatDate(anime.aired.to) : 'Ongoing'}
                       </Typography>
-                    </Box>
+                    </div>
                   )}
 
                   {anime.source && (
-                    <Box sx={{ mb: 2 }}>
+                    <div style={{ marginBottom: 16 }}>
                       <Typography variant="subtitle2" gutterBottom>
                         Source
                       </Typography>
                       <Typography variant="body2">
                         {anime.source}
                       </Typography>
-                    </Box>
+                    </div>
                   )}
 
                   {anime.duration && (
-                    <Box sx={{ mb: 2 }}>
+                    <div style={{ marginBottom: 16 }}>
                       <Typography variant="subtitle2" gutterBottom>
                         Duration
                       </Typography>
                       <Typography variant="body2">
                         {anime.duration}
                       </Typography>
-                    </Box>
+                    </div>
                   )}
-                </Box>
+                </div>
 
-                <Box sx={{ flex: 1 }}>
-                  <Box sx={{ mb: 2 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ marginBottom: 16 }}>
                     <Typography variant="subtitle2" gutterBottom>
                       Popularity
                     </Typography>
                     <Typography variant="body2">
                       #{anime.popularity?.toLocaleString() || 'N/A'}
                     </Typography>
-                  </Box>
+                  </div>
 
-                  <Box sx={{ mb: 2 }}>
+                  <div style={{ marginBottom: 16 }}>
                     <Typography variant="subtitle2" gutterBottom>
                       Members
                     </Typography>
                     <Typography variant="body2">
                       {anime.members?.toLocaleString() || 'N/A'}
                     </Typography>
-                  </Box>
+                  </div>
 
-                  <Box sx={{ mb: 2 }}>
+                  <div style={{ marginBottom: 16 }}>
                     <Typography variant="subtitle2" gutterBottom>
                       Favorites
                     </Typography>
                     <Typography variant="body2">
                       {anime.favorites?.toLocaleString() || 'N/A'}
                     </Typography>
-                  </Box>
-                </Box>
-              </Box>
+                  </div>
+                </div>
+              </div>
 
               {/* Genres */}
               {renderGenres(anime)}
 
               {/* Studios */}
               {renderStudios(anime)}
-            </Box>
-          </Box>
+            </div>
+          </div>
 
           {/* Trailer */}
           {renderTrailer(anime)}
 
           {/* Background */}
           {anime.background && (
-            <Box sx={{ mt: 4 }}>
+            <div style={{ marginTop: 32 }}>
               <Typography variant="h6" gutterBottom>
                 Background
               </Typography>
               <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
                 {anime.background}
               </Typography>
-            </Box>
+            </div>
           )}
-        </div>
-      </Fade>
-    </Container>
+        </motion.div>
+      </Container>
+    </div>
   );
 };
 

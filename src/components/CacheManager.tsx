@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Box,
   Typography,
   Button,
   IconButton,
@@ -83,31 +82,41 @@ const CacheManager: React.FC<CacheManagerProps> = ({ open, onClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth="md"
+      fullWidth
+      slotProps={{
+        backdrop: {
+          style: { backgroundColor: 'rgba(0, 0, 0, 0.8)' } // Fully opaque background
+        }
+      }}
+    >
       <DialogTitle>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           Cache Manager
           <Chip
             icon={<InfoIcon />}
             label={`${stats.detailsCount + stats.searchesCount} items • ${formatSize(stats.totalSize)}`}
             variant="outlined"
           />
-        </Box>
+        </div>
       </DialogTitle>
 
       <DialogContent>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
+        <div style={{ borderBottom: 1, borderColor: 'divider', marginBottom: 16 }}>
           <Tabs value={tabValue} onChange={handleTabChange}>
             <Tab label={`Anime Details (${detailsCache.length})`} />
             <Tab label={`Search Results (${searchCache.length})`} />
           </Tabs>
-        </Box>
+        </div>
 
         {/* Anime Details Tab */}
         {tabValue === 0 && (
-          <Box>
+          <div>
             {detailsCache.length === 0 ? (
-              <Box sx={{ textAlign: 'center', py: 4 }}>
+              <div style={{ textAlign: 'center', padding: '16px 0' }}>
                 <StorageIcon sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }} />
                 <Typography variant="h6" color="text.secondary">
                   No anime details cached yet
@@ -115,7 +124,7 @@ const CacheManager: React.FC<CacheManagerProps> = ({ open, onClose }) => {
                 <Typography variant="body2" color="text.secondary">
                   Visit anime detail pages to see cached items here
                 </Typography>
-              </Box>
+              </div>
             ) : (
               <List>
                 {detailsCache.map((entry, index) => (
@@ -123,11 +132,11 @@ const CacheManager: React.FC<CacheManagerProps> = ({ open, onClose }) => {
                     <ListItemText
                       primary={entry.data.title}
                       secondary={
-                        <Box>
+                        <div>
                           <Typography variant="body2" color="text.secondary">
                             ID: {entry.data.mal_id} • Cached: {formatAge(entry.timestamp)}
                           </Typography>
-                        </Box>
+                        </div>
                       }
                     />
                     <ListItemSecondaryAction>
@@ -142,14 +151,14 @@ const CacheManager: React.FC<CacheManagerProps> = ({ open, onClose }) => {
                 ))}
               </List>
             )}
-          </Box>
+          </div>
         )}
 
         {/* Search Results Tab */}
         {tabValue === 1 && (
-          <Box>
+          <div>
             {searchCache.length === 0 ? (
-              <Box sx={{ textAlign: 'center', py: 4 }}>
+              <div style={{ textAlign: 'center', padding: '16px 0' }}>
                 <StorageIcon sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }} />
                 <Typography variant="h6" color="text.secondary">
                   No search results cached yet
@@ -157,21 +166,21 @@ const CacheManager: React.FC<CacheManagerProps> = ({ open, onClose }) => {
                 <Typography variant="body2" color="text.secondary">
                   Search for anime or browse top anime to see cached results here
                 </Typography>
-              </Box>
+              </div>
             ) : (
               <List>
                 {searchCache.map((entry, index) => (
                   <ListItem key={`${entry.query}-${entry.page}`} divider={index < searchCache.length - 1}>
                     <ListItemText
                       primary={
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                           {entry.query === 'TOP_ANIME' ? (
                             <Chip label="Top Anime" color="primary" size="small" />
                           ) : (
                             <Typography variant="subtitle1">"{entry.query}"</Typography>
                           )}
                           <Chip label={`Page ${entry.page}`} size="small" variant="outlined" />
-                        </Box>
+                        </div>
                       }
                       secondary={
                         <Typography variant="body2" color="text.secondary">
@@ -191,7 +200,7 @@ const CacheManager: React.FC<CacheManagerProps> = ({ open, onClose }) => {
                 ))}
               </List>
             )}
-          </Box>
+          </div>
         )}
       </DialogContent>
 

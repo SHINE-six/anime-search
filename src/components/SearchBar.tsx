@@ -3,7 +3,6 @@ import {
   TextField,
   InputAdornment,
   IconButton,
-  Box,
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -58,7 +57,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <Box sx={{ width: '100%', mb: 3 }}>
+    <div style={{ width: '100%', marginBottom: 3 }}>
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
@@ -95,7 +94,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           }}
         />
       </form>
-    </Box>
+    </div>
   );
 };
 

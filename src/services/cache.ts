@@ -197,6 +197,68 @@ class CacheService {
     }
   }
 
+  getAllCachedAnime(): Anime[] {
+    try {
+      const searches = this.getCachedSearches();
+      const animeMap = new Map<number, Anime>();
+      
+      // Collect all anime from cached searches, avoiding duplicates
+      searches.forEach(entry => {
+        if (entry.data && entry.data.data) {
+          entry.data.data.forEach((anime: Anime) => {
+            if (!animeMap.has(anime.mal_id)) {
+              animeMap.set(anime.mal_id, anime);
+            }
+          });
+        }
+      });
+      
+      console.debug('[cache] Retrieved all cached anime', { 
+        searchEntries: searches.length, 
+        uniqueAnime: animeMap.size 
+      });
+      
+      return Array.from(animeMap.values());
+    } catch (error) {
+      console.error('[cache] Failed to get all cached anime:', error);
+      return [];
+    }
+  }
+
+  getAllCachedAnimeWithPageInfo(): Array<Anime & { pageInfo: { query: string, page: number } }> {
+    try {
+      const searches = this.getCachedSearches();
+      const animeMap = new Map<number, Anime & { pageInfo: { query: string, page: number } }>();
+      
+      // Collect all anime from cached searches with page info
+      searches.forEach(entry => {
+        if (entry.data && entry.data.data) {
+          entry.data.data.forEach((anime: Anime) => {
+            if (!animeMap.has(anime.mal_id)) {
+              animeMap.set(anime.mal_id, {
+                ...anime,
+                pageInfo: {
+                  query: entry.query,
+                  page: entry.page
+                }
+              });
+            }
+          });
+        }
+      });
+      
+      console.debug('[cache] Retrieved all cached anime with page info', { 
+        searchEntries: searches.length, 
+        uniqueAnime: animeMap.size 
+      });
+      
+      return Array.from(animeMap.values());
+    } catch (error) {
+      console.error('[cache] Failed to get all cached anime with page info:', error);
+      return [];
+    }
+  }
+
   clearAllCache(): void {
     try {
       localStorage.removeItem(this.DETAILS_CACHE_KEY);
