@@ -2,7 +2,7 @@
 
 A modern, interactive anime discovery application built with React, TypeScript, and Redux. Search for anime, explore in 3D, and dive deep into detailed information about your favorite series.
 
-🌐 **Live Demo**: [Your Deployment URL Here]
+🌐 **Live Demo**: [\[Your Deployment URL Here\]](https://anime-search-psi.vercel.app)
 
 ## Overview
 
