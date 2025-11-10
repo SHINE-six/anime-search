@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useState, useEffect, useCallback } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { CircularProgress } from '@mui/material';
@@ -21,7 +21,7 @@ const SceneClickHandler: React.FC<{
 }> = ({ animeList, onAnimeClick }) => {
   const { camera, scene, raycaster, pointer, gl } = useThree();
 
-  const handleClick = (event: MouseEvent) => {
+  const handleClick = useCallback((event: MouseEvent) => {
     // Calculate mouse position in normalized device coordinates
     const rect = gl.domElement.getBoundingClientRect();
     pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -54,7 +54,7 @@ const SceneClickHandler: React.FC<{
         onAnimeClick(animeData);
       }
     }
-  };
+  }, [camera, scene, raycaster, pointer, gl, onAnimeClick]);
 
   React.useEffect(() => {
     const canvas = gl.domElement;
@@ -62,7 +62,7 @@ const SceneClickHandler: React.FC<{
     return () => {
       canvas.removeEventListener('click', handleClick);
     };
-  }, [animeList, onAnimeClick, gl.domElement, camera, scene, raycaster, pointer, handleClick]);
+  }, [handleClick, gl.domElement]);
 
   return null; // This component doesn't render anything
 };
