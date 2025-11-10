@@ -62,7 +62,7 @@ const SceneClickHandler: React.FC<{
     return () => {
       canvas.removeEventListener('click', handleClick);
     };
-  }, [animeList, onAnimeClick, gl.domElement, camera, scene, raycaster, pointer]);
+  }, [animeList, onAnimeClick, gl.domElement, camera, scene, raycaster, pointer, handleClick]);
 
   return null; // This component doesn't render anything
 };
